@@ -1,0 +1,36 @@
+.navbar {
+  background-color: $dark-color;
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  font-family: $navbar-font-family;
+
+  &-brand {
+    margin-right: auto;
+
+    &-link {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding-left: 1rem;
+    }
+  }
+
+  &-items {
+    display: flex;
+    height: 100%;
+  }
+
+  &-item-link {
+    display: block;
+    height: 100%;
+    color: #fff;
+    padding: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: $primary-color;
+    }
+  }
+}
