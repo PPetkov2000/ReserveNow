@@ -21,7 +21,7 @@ const getRooms = async ({
   const options = {};
 
   if (filters) {
-    if ("name" in filters) {
+    if ("name" in filters && filters["name"]) {
       query = { $text: { $search: filters["name"] } };
     } else if ("property_type" in filters) {
       query = { property_type: { $eq: filters["property_type"] } };
