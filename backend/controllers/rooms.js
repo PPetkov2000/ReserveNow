@@ -1,13 +1,12 @@
 const roomsDAO = require("../dao/rooms");
 
 const getRooms = async (req, res, next) => {
-  const page = req.query.page ? Number(req.query.page) : 0;
+  const page = req.query.page ? Number(req.query.page) : 1;
   const roomsPerPage = req.query.roomsPerPage
     ? Number(req.query.roomsPerPage)
     : 10;
   const filters = {};
   Object.assign(filters, req.query);
-
   const { roomsList, totalRooms } = await roomsDAO.getRooms({
     filters,
     page,
