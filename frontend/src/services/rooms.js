@@ -7,16 +7,12 @@ const api = axios.create({
   },
 });
 
-function getRooms(keyword = "", page = 1) {
-  return api.get(`?name=${keyword}&page=${page}`);
+function getRooms(by = "name", query = "", page = 1) {
+  return api.get(`?${by}=${query}&page=${page}`);
 }
 
 function getRoom(id) {
   return api.get(id);
 }
 
-function findRoom(query, by = "name", page = 1) {
-  return api.get(`?${by}=${query}&page=${page}`);
-}
-
-export { getRooms, getRoom, findRoom };
+export { getRooms, getRoom };
