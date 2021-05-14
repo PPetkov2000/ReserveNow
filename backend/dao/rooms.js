@@ -27,6 +27,12 @@ const getRooms = async ({
       query = { property_type: { $eq: filters["property_type"] } };
     } else if ("beds" in filters) {
       query = { beds: { $eq: Number(filters["beds"]) } };
+    } else if ("amenity" in filters) {
+      query = { amenities: { $in: [filters["amenity"]] } }; // TODO
+    } else if ("price" in filters) {
+      query = {
+        price: { $elemMatch: { $numberDecimal: { $gt: 100, $lte: 300 } } },
+      };
     }
   }
 
