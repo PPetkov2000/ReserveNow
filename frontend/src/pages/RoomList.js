@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import RoomListSortings from "../components/RoomListSortings";
 import { getRooms } from "../services/rooms";
 
-const RoomList = ({ match, history, location }) => {
+const RoomList = ({ match, location }) => {
   const keywordType = match.params.by || "name";
   const keyword = match.params.keyword;
   const page = match.params.pageNumber || 1;
@@ -14,11 +14,6 @@ const RoomList = ({ match, history, location }) => {
   useEffect(() => {
     retrieveRooms(keywordType, keyword, page);
   }, [keywordType, keyword, page]);
-
-  useEffect(() => {
-    const query = location.search.split("&").map((x) => x.split("="));
-    console.log(query);
-  }, [location.search]);
 
   const retrieveRooms = async (keywordType, keyword, page) => {
     try {
@@ -43,6 +38,15 @@ const RoomList = ({ match, history, location }) => {
       console.log(error);
     }
   };
+
+  // const query =
+  //   location.search &&
+  //   location.search
+  //     .slice(1)
+  //     .split("&")
+  //     .map((x) => x.split("="));
+  // const keywordType = query ? query[0][0] : "name";
+  // const keyword = query ? query[0][1] : "";
 
   return (
     <>
