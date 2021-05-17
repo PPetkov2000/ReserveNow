@@ -1,31 +1,10 @@
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
-
-const RoomListSortings = ({ propertyTypes, amenities }) => {
-  const [propertyType, setPropertyType] = useState("");
-  const [amenity, setAmenity] = useState("");
-  const [price, setPrice] = useState("");
-  const history = useHistory();
-
-  useEffect(() => {
-    const query = multipleQueries(propertyType, amenity, price);
-    history.push("/rooms" + query);
-  }, [history, propertyType, amenity, price]);
-
-  const multipleQueries = (propertyType, amenity, price) => {
-    let query = "";
-    if (propertyType) {
-      query += `${query === "" ? "?" : "&"}property_type=${propertyType}`;
-    }
-    if (amenity) {
-      query += `${query === "" ? "?" : "&"}amenity=${amenity}`;
-    }
-    if (price) {
-      query += `${query === "" ? "?" : "&"}price=${price}`;
-    }
-    return query;
-  };
-
+const RoomListSortings = ({
+  propertyTypes,
+  amenities,
+  setPropertyType,
+  setAmenity,
+  setPrice,
+}) => {
   return (
     <div className="room-list-selects">
       <select
