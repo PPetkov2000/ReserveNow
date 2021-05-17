@@ -3,17 +3,31 @@ import { Link } from "react-router-dom";
 import RoomListSortings from "../components/RoomListSortings";
 import { getRooms } from "../services/rooms";
 
-const RoomList = ({ match, location }) => {
-  const keywordType = match.params.by || "name";
+const RoomList = ({ match }) => {
   const keyword = match.params.keyword;
   const page = match.params.pageNumber || 1;
   const [rooms, setRooms] = useState([]);
   const [amenities, setAmenities] = useState([]);
   const [propertyTypes, setPropertyTypes] = useState([]);
+  const [propertyType, setPropertyType] = useState("");
+  const [amenity, setAmenity] = useState("");
+  const [price, setPrice] = useState("");
 
   useEffect(() => {
-    retrieveRooms(keywordType, keyword, page);
-  }, [keywordType, keyword, page]);
+    if (keyword) {
+      retrieveRooms("name", keyword, page);
+    } else {
+      if (propertyType) {
+        retrieveRooms("property_type", propertyType, page);
+      } else if (amenity) {
+        retrieveRooms("amenity", amenity, page);
+      } else if (price) {
+        retrieveRooms("price", price, page);
+      }
+    }
+  }, [keyword, page, propertyType, amenity, price]);
+
+  console.log(propertyType, amenity, price);
 
   const retrieveRooms = async (keywordType, keyword, page) => {
     try {
@@ -39,18 +53,15 @@ const RoomList = ({ match, location }) => {
     }
   };
 
-  // const query =
-  //   location.search &&
-  //   location.search
-  //     .slice(1)
-  //     .split("&")
-  //     .map((x) => x.split("="));
-  // const keywordType = query ? query[0][0] : "name";
-  // const keyword = query ? query[0][1] : "";
-
   return (
     <>
-      <RoomListSortings propertyTypes={propertyTypes} amenities={amenities} />
+      <RoomListSortings
+        propertyTypes={propertyTypes}
+        amenities={amenities}
+        setPropertyType={setPropertyType}
+        setAmenity={setAmenity}
+        setPrice={setPrice}
+      />
       <div className="room-list-wrapper">
         {rooms.map((room) => (
           <div key={room._id} className="room-card">
