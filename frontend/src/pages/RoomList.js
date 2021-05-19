@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import RoomListSortings from "../components/RoomListSortings";
 import { getRooms } from "../services/rooms";
 
+const sortingCriterias = ["name", "property_type", "amenity", "price"];
+
 const RoomList = ({ match }) => {
   const keyword = match.params.keyword;
   const page = match.params.pageNumber || 1;
@@ -14,20 +16,16 @@ const RoomList = ({ match }) => {
   const [price, setPrice] = useState("");
 
   useEffect(() => {
-    if (keyword) {
-      retrieveRooms("name", keyword, page);
+    if (propertyType) {
+      retrieveRooms("property_type", propertyType, page);
+    } else if (amenity) {
+      retrieveRooms("amenity", amenity, page);
+    } else if (price) {
+      retrieveRooms("price", price, page);
     } else {
-      if (propertyType) {
-        retrieveRooms("property_type", propertyType, page);
-      } else if (amenity) {
-        retrieveRooms("amenity", amenity, page);
-      } else if (price) {
-        retrieveRooms("price", price, page);
-      }
+      retrieveRooms("name", keyword, page);
     }
   }, [keyword, page, propertyType, amenity, price]);
-
-  console.log(propertyType, amenity, price);
 
   const retrieveRooms = async (keywordType, keyword, page) => {
     try {
