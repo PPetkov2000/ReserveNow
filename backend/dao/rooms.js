@@ -30,8 +30,9 @@ const getRooms = async ({
     } else if ("amenity" in filters) {
       query = { amenities: { $in: [filters["amenity"]] } }; // TODO
     } else if ("price" in filters) {
+      const [min, max] = filters["price"].split("-");
       query = {
-        price: { $elemMatch: { $numberDecimal: { $gt: 100, $lte: 300 } } },
+        price: { $elemMatch: { $numberDecimal: { $gt: min, $lte: max } } },
       };
     }
   }
