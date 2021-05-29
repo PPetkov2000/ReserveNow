@@ -5,10 +5,8 @@ const getRooms = async (req, res, next) => {
   const roomsPerPage = req.query.roomsPerPage
     ? Number(req.query.roomsPerPage)
     : 10;
-  const filters = {};
-  Object.assign(filters, req.query);
   const { roomsList, totalRooms } = await roomsDAO.getRooms({
-    filters,
+    filters: req.query,
     page,
     roomsPerPage,
   });
@@ -17,7 +15,7 @@ const getRooms = async (req, res, next) => {
     total_results: totalRooms,
     entries_per_page: roomsPerPage,
     page,
-    filters,
+    filters: req.query,
   });
 };
 
