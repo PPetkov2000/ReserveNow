@@ -1,16 +1,16 @@
 const RoomListSortings = ({
   propertyTypes,
   amenities,
-  setPropertyType,
-  setAmenity,
-  setPrice,
+  retrieveRoomsByPropertyType,
+  retrieveRoomsByAmenity,
+  retrieveRoomsByPrice,
 }) => {
   return (
     <div className="room-list-selects">
       <select
         className="room-list-select"
         defaultValue="default"
-        onChange={(e) => setPropertyType(e.target.value)}
+        onChange={(e) => retrieveRoomsByPropertyType(e.target.value)}
       >
         <option value="default" disabled hidden>
           Property Type
@@ -24,7 +24,7 @@ const RoomListSortings = ({
       <select
         className="room-list-select"
         defaultValue="default"
-        onChange={(e) => setAmenity(e.target.value)}
+        onChange={(e) => retrieveRoomsByAmenity(e.target.value)}
       >
         <option value="default" disabled hidden>
           Amenities
@@ -38,7 +38,7 @@ const RoomListSortings = ({
       <select
         className="room-list-select"
         defaultValue="default"
-        onChange={(e) => setPrice(e.target.value)}
+        onChange={(e) => retrieveRoomsByPrice(e.target.value)}
       >
         <option value="default" disabled hidden>
           Price
