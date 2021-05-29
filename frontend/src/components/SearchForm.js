@@ -6,8 +6,8 @@ const SearchForm = () => {
   const history = useHistory();
 
   const submitHandler = (e) => {
-    if (!keyword) return;
     e.preventDefault();
+    if (!keyword) return;
     history.push(`/search/${keyword}`);
     setKeyword("");
   };
