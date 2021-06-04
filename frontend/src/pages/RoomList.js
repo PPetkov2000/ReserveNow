@@ -13,6 +13,10 @@ const RoomList = ({ match }) => {
   const [propertyTypes, setPropertyTypes] = useState([]);
 
   useEffect(() => {
+    getFilters();
+  }, []);
+
+  useEffect(() => {
     retrieveRoomsByName();
   }, [keyword]);
 
@@ -20,9 +24,16 @@ const RoomList = ({ match }) => {
     try {
       const { data } = await getRooms(keywordType, keyword, page);
       setRooms(data.rooms);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getFilters = async () => {
+    try {
+      const { data } = await getRooms();
       setPropertyTypes(getPropertyTypes(data));
       setAmenities(getAmenities(data));
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -47,15 +58,15 @@ const RoomList = ({ match }) => {
   };
 
   const retrieveRoomsByName = () => {
-    return retrieveRooms("name", keyword);
+    return retrieveRooms("name", keyword, page);
   };
 
   const retrieveRoomsByPropertyType = (propertyType) => {
-    return retrieveRooms("property_type", propertyType);
+    return retrieveRooms("property_type", propertyType, page);
   };
 
   const retrieveRoomsByAmenity = (amenity) => {
-    return retrieveRooms("amenity", amenity);
+    return retrieveRooms("amenity", amenity, page);
   };
 
   const retrieveRoomsByPrice = (price) => {
