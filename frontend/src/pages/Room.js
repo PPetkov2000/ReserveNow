@@ -33,9 +33,11 @@ const Room = ({ match }) => {
       </h2>
       <div className="room-info-content">
         <div>
-          <p className="room-info-text">
-            <strong>Summary:</strong> {room.summary}
-          </p>
+          {room.summary && (
+            <p className="room-info-text">
+              <strong>Summary:</strong> {room.summary}
+            </p>
+          )}
           <p className="room-info-text">
             <strong>Amenities:</strong>{" "}
             {room.amenities && room.amenities.join(", ")}
@@ -102,10 +104,12 @@ const Room = ({ match }) => {
                 {room.monthly_price && room.monthly_price.$numberDecimal}
               </p>
             )}
-            <p className="room-info-pricing-text">
-              Cleaning Fee: $
-              {room.cleaning_fee && room.cleaning_fee.$numberDecimal}
-            </p>
+            {room.cleaning_fee && (
+              <p className="room-info-pricing-text">
+                Cleaning Fee: $
+                {room.cleaning_fee && room.cleaning_fee.$numberDecimal}
+              </p>
+            )}
           </div>
         </div>
       </div>
