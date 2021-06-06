@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import RoomListSortings from "../components/RoomListSortings";
 import { getRooms } from "../services/rooms";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import RoomListSortings from "../components/RoomListSortings";
 
 // const sortingCriterias = ["name", "property_type", "amenity", "price"];
 
 const RoomList = ({ match }) => {
   const keyword = match.params.keyword;
   const page = match.params.pageNumber || 1;
+  const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState([]);
+  const [error, setError] = useState(null);
   const [amenities, setAmenities] = useState([]);
   const [propertyTypes, setPropertyTypes] = useState([]);
 
@@ -21,10 +25,14 @@ const RoomList = ({ match }) => {
   }, [keyword]);
 
   const retrieveRooms = async (keywordType, keyword, page) => {
+    setLoading(true);
     try {
       const { data } = await getRooms(keywordType, keyword, page);
       setRooms(data.rooms);
+      setLoading(false);
     } catch (error) {
+      setError(error.message);
+      setLoading(false);
       console.log(error);
     }
   };
@@ -70,7 +78,7 @@ const RoomList = ({ match }) => {
   };
 
   const retrieveRoomsByPrice = (price) => {
-    return retrieveRooms("price", price);
+    return retrieveRooms("price", price, page);
   };
 
   return (
@@ -82,26 +90,32 @@ const RoomList = ({ match }) => {
         retrieveRoomsByAmenity={retrieveRoomsByAmenity}
         retrieveRoomsByPrice={retrieveRoomsByPrice}
       />
-      <div className="room-list-wrapper">
-        {rooms.map((room) => (
-          <div key={room._id} className="room-card">
-            <Link to={`/rooms/${room._id}`}>
-              <img
-                src={room.images.picture_url}
-                alt={room.name}
-                className="room-card-image"
-              />
-            </Link>
-            <Link to={`/rooms/${room._id}`}>
-              <h3 className="room-card-title">{room.name}</h3>
-            </Link>
-            <p className="room-card-text">
-              <strong>Price: ${room.price.$numberDecimal}</strong> for{" "}
-              <strong>{room.minimum_nights}</strong> nights
-            </p>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message>{error}</Message>
+      ) : (
+        <div className="room-list-wrapper">
+          {rooms.map((room) => (
+            <div key={room._id} className="room-card">
+              <Link to={`/rooms/${room._id}`}>
+                <img
+                  src={room.images.picture_url}
+                  alt={room.name}
+                  className="room-card-image"
+                />
+              </Link>
+              <Link to={`/rooms/${room._id}`}>
+                <h3 className="room-card-title">{room.name}</h3>
+              </Link>
+              <p className="room-card-text">
+                <strong>Price: ${room.price.$numberDecimal}</strong> for{" "}
+                <strong>{room.minimum_nights}</strong> nights
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 };
