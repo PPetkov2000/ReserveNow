@@ -21,15 +21,11 @@ cd frontend => npm install
 ```sh
 PORT=4000
 MONGO_URI=your_mongoDB_uri
-
-#### For the PayPal button to work add this
-PAYPAL_CLIENT_ID=your_paypal_client_id
 ```
 5. Run Application
 ```sh
-run frontend: npm run client
+run frontend: cd frontend => npm start
 run backend: cd backend => npm run server
-run both: npm run dev
 ```
 6. Go to
 ```sh
