@@ -11,7 +11,7 @@ git clone https://github.com/PPetkov2000/ReserveNow
 ```
 2. Install NPM backend packages
 ```sh
-cd frontend => npm install
+cd backend => npm install
 ```
 3. Install NPM frontend packages
 ```sh
