@@ -1,18 +1,11 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:4000/api/v1/rooms/",
-  headers: {
-    "Content-type": "application/json",
-  },
-});
+import api from "../utils/api-instance";
 
 function getRooms(by = "name", query = "", page = 1) {
-  return api.get(`?${by}=${query}&page=${page}`);
+  return api.get(`/api/v1/rooms?${by}=${query}&page=${page}`);
 }
 
 function getRoom(id) {
-  return api.get(id);
+  return api.get(`/api/v1/rooms/${id}`);
 }
 
 export { getRooms, getRoom };
