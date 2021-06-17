@@ -1,4 +1,4 @@
-module.exports = function (instance) {
+const addInterceptors = (instance) => {
   instance.interceptors.request.use(
     (request) => {
       if (localStorage.getItem("authUser")) {
@@ -33,3 +33,5 @@ module.exports = function (instance) {
     }
   );
 };
+
+export default addInterceptors;
