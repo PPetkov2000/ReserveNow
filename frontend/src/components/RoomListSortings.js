@@ -1,17 +1,7 @@
-const RoomListSortings = ({
-  propertyTypes,
-  amenities,
-  retrieveRoomsByPropertyType,
-  retrieveRoomsByAmenity,
-  retrieveRoomsByPrice,
-}) => {
+const RoomListSortings = ({ propertyTypes, amenities, handleChange }) => {
   return (
     <div className="room-list-selects">
-      <select
-        className="room-list-select"
-        defaultValue="default"
-        onChange={(e) => retrieveRoomsByPropertyType(e.target.value)}
-      >
+      <select className="room-list-select" name="property_type" defaultValue="default" onChange={handleChange}>
         <option value="default" disabled hidden>
           Property Type
         </option>
@@ -21,11 +11,7 @@ const RoomListSortings = ({
           </option>
         ))}
       </select>
-      <select
-        className="room-list-select"
-        defaultValue="default"
-        onChange={(e) => retrieveRoomsByAmenity(e.target.value)}
-      >
+      <select className="room-list-select" name="amenity" defaultValue="default" onChange={handleChange}>
         <option value="default" disabled hidden>
           Amenities
         </option>
@@ -35,11 +21,7 @@ const RoomListSortings = ({
           </option>
         ))}
       </select>
-      <select
-        className="room-list-select"
-        defaultValue="default"
-        onChange={(e) => retrieveRoomsByPrice(e.target.value)}
-      >
+      <select className="room-list-select" name="price" defaultValue="default" onChange={handleChange}>
         <option value="default" disabled hidden>
           Price
         </option>
@@ -51,7 +33,7 @@ const RoomListSortings = ({
         <option value="500+">500+</option>
       </select>
     </div>
-  );
-};
+  )
+}
 
-export default RoomListSortings;
+export default RoomListSortings
