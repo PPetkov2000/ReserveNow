@@ -1,10 +1,13 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import "./App.scss";
-import Navigation from "./components/Navigation";
-import Footer from "./components/Footer";
-import RoomList from "./pages/RoomList";
-import Room from "./pages/Room";
-import Host from "./pages/Host";
+import { Suspense, lazy } from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import './App.scss'
+import Navigation from './components/Navigation'
+import Loader from './components/Loader'
+
+const RoomList = lazy(() => import('./pages/RoomList'))
+const Room = lazy(() => import('./pages/Room'))
+const Host = lazy(() => import('./pages/Host'))
+const Footer = lazy(() => import('./components/Footer'))
 
 function App() {
   return (
@@ -12,18 +15,18 @@ function App() {
       <Navigation />
       <main className="content-wrapper">
         <Switch>
-          <Route
-            path={["/", "/rooms", "/search/:keyword", "/page/:pageNumber"]}
-            exact
-            component={RoomList}
-          />
-          <Route path="/rooms/:id" component={Room} />
-          <Route path="/host/:id" component={Host} />
+          <Suspense fallback={<Loader />}>
+            <Route path={['/', '/rooms', '/search/:keyword', '/page/:pageNumber']} exact component={RoomList} />
+            <Route path="/rooms/:id" component={Room} />
+            <Route path="/host/:id" component={Host} />
+          </Suspense>
         </Switch>
       </main>
-      <Footer />
+      <Suspense fallback={<Loader />}>
+        <Footer />
+      </Suspense>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App
