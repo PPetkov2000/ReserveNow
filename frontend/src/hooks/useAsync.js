@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import errorHandler from '../utils/errorHandler'
 
 const useAsync = (func, dependencies = [], immediate = true) => {
   const [loading, setLoading] = useState(false)
@@ -14,9 +15,10 @@ const useAsync = (func, dependencies = [], immediate = true) => {
         return data
       })
       .catch((error) => {
-        setError(error.response?.data?.message || error?.message || error)
+        const errorMessage = errorHandler(error)
+        setError(errorMessage)
         setData(undefined)
-        return Promise.reject(error.response?.data?.message || error?.message || error)
+        return Promise.reject(errorMessage)
       })
       .finally(() => {
         setLoading(false)
